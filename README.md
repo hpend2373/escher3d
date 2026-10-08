@@ -33,6 +33,8 @@ You can also run `./Escher-iMM1865.sh` on macOS/Linux or `Escher-iMM1865.cmd` on
 - **Layout optimization:** Compares the current layout with three additional starting layouts and applies the result with a lower objective combining connection length, repulsion, and attraction to the center. Runs in a Web Worker with progress reporting and cancellation.
 - **Pathway exploration:** View the full map, neighborhoods around selected items, or candidate routes between a source and a destination. Filter common cofactors and zero-flux reactions.
 - **Flow visualization:** Direction arrows, moving particles, play/pause, speed control, and depth adjustment.
+- **Collapsible settings:** Use the top-bar settings button to collapse or expand the left sidebar and give the 3D view more space. The demo card remains discoverable on every map and explains when an example map is required.
+- **Demo highlights:** The four example maps automatically highlight selected presentation regions with red and blue edges and arrows, with matching larger moving particles and short fading trails; other flows use 60% of their normal opacity while highlights are enabled. Glycolysis/TCA/PPP also highlights TCA entry in yellow, and the tryptophan example adds a yellow melatonin synthesis region. Use the demo toggle to turn them off. These presets do not represent measured activity or biological importance; PNG exports retain the demo notice.
 - **Export:** Map JSON, a PNG of the current 3D view, and separate 3D view JSON containing optimized coordinates and camera settings.
 
 ## Four public example pathways
@@ -62,7 +64,7 @@ Automatic 3D layout does not overwrite the original 2D coordinates. **3D 보기 
 npm test
 ```
 
-The 15 checks cover reaction direction, signed flux, moving/undoing, route exploration, 3D structure within a single compartment, preservation of the original map, the optimization objective, and coordinate saving/restoration. The 3D view requires WebGL2; 2D editing remains available if graphics initialization fails.
+The 22 checks cover reaction direction, signed flux, moving/undoing, route exploration, 3D structure within a single compartment, preservation of the original map, the optimization objective, and coordinate saving/restoration, demo target validity without changing source maps, and signed trail direction and boundary handling. The 3D view requires WebGL2; 2D editing remains available if graphics initialization fails.
 
 ## Project structure
 

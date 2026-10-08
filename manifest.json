@@ -34,12 +34,12 @@
       "sha256": "783a24731c28087c01a49f6a02e43d586f3c2fa87611732025c48aeface0e34f"
     },
     "README.ko.md": {
-      "bytes": 5409,
-      "sha256": "adbdff595494a32971e151e3752c093c088bfbd9b5a200dc55292b5891d64204"
+      "bytes": 6296,
+      "sha256": "d99948343aac1135f6767103025e9b5a3d6f4084a777b3bacbeafe38a3019aef"
     },
     "README.md": {
-      "bytes": 5521,
-      "sha256": "ad5e206f18e7446050811eec7900ee774862de95038b308c7f61ab47d6c87519"
+      "bytes": 6394,
+      "sha256": "0435bf1073dda4e67a7e1509ffcd0ea20fa8f27ff3aebd3d49254f7a01e4f4f1"
     },
     "README.txt": {
       "bytes": 167,
@@ -81,21 +81,29 @@
       "bytes": 6889,
       "sha256": "ec37229ea4f7ab93eb87f4dd5e5c30f1b2a74853acca77efa90a41042b61fe4b"
     },
+    "app/demo-highlights.js": {
+      "bytes": 1986,
+      "sha256": "cd744c350583f91a17486e38083a279be7b78a18fca61eb52344cf6f90293af2"
+    },
     "app/escher-3d.css": {
-      "bytes": 9690,
-      "sha256": "79b799799d2d278c0c180850a590d1dca4203ea41b365a46e26a58ce6a598832"
+      "bytes": 10636,
+      "sha256": "045a4aee67a8c757babfbb7b2814963fc8fea783c1e1554a491e87dac407392d"
     },
     "app/escher-3d.js": {
-      "bytes": 51070,
-      "sha256": "6f8c6a2c545457fd4c6dc8c11d99fafabf631585c0dd8c947dfe60b64ccbcba4"
+      "bytes": 55831,
+      "sha256": "afbaca1a16f763bbd138aaa68db583d508b204d26a98e212ac351cd26805fb0c"
+    },
+    "app/flow-animation.js": {
+      "bytes": 275,
+      "sha256": "dd0aed006bf98cbad490da61dd225baf4a70e57cb1a04cc409344e9e17eec6bc"
     },
     "app/graph-layout.js": {
       "bytes": 13519,
       "sha256": "0407755f6765441c1bb47608dedd91aa8fc6f1901f723b22f00f5e6c6973b8a5"
     },
     "app/index.html": {
-      "bytes": 732,
-      "sha256": "4f801f89733a66a9fc23754e191dcc3ac72df9deae5b5ff042716893523d52fc"
+      "bytes": 780,
+      "sha256": "78edf97d5761d20b593efce94565d9220739f9b3b7e76cb0b5de05bdfe77e684"
     },
     "app/map-router.js": {
       "bytes": 1020,
@@ -209,6 +217,10 @@
       "bytes": 6966,
       "sha256": "ea38044fa7679b001a47214239de89ed389cf48742f5290dfafed0d0b4708cb1"
     },
+    "tests/demo-highlights.test.mjs": {
+      "bytes": 1879,
+      "sha256": "fbc4dbc04db426077f108df1aa61caa9e5cccee6cc89f1cce673819d670c2297"
+    },
     "tests/fixtures/comparison.json": {
       "bytes": 49,
       "sha256": "b43f818bf9ba09de7d451bcccff8b2eae47d1114ffeea9ba3111b4a2969da996"
@@ -216,6 +228,10 @@
     "tests/fixtures/signed-flux.json": {
       "bytes": 44,
       "sha256": "ca01285ddc56f2fbb070be1fe9f0d9e6046c77f29c335ee19f7685ef1c1d1d91"
+    },
+    "tests/flow-animation.test.mjs": {
+      "bytes": 904,
+      "sha256": "4e77f168757ccfa0b7f1d2f8e5675f2b8a69cef6507a4a0b80c55c71b5a770e1"
     },
     "tests/graph-layout.test.mjs": {
       "bytes": 7619,

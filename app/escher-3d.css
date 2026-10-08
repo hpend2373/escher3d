@@ -103,3 +103,16 @@ body { margin:0 }
   .e3-details{width:200px;right:8px;top:8px}.e3-footer{font-size:9px;padding:0 8px}
 }
 @media(max-height:680px) {.e3-sidebar{padding-top:12px}.e3-section{margin-top:12px;padding-top:12px}}
+
+/* Example-map presentation highlights. */
+.e3-demo-card { margin:14px 0; padding:12px; border:1px solid #815c76; border-radius:10px; background:#ff68bb09; color:#ffd0e7 }
+.e3-demo-card label { display:flex; align-items:center; gap:8px; font-weight:600; cursor:pointer }
+.e3-demo-card strong { display:block; margin-top:10px; font-size:12px }
+.e3-demo-card p { font-size:11px; line-height:1.6; margin:7px 0 0; color:#c5a9bb }
+.e3-demo-badge { position:absolute; top:60px; left:20px; padding:7px 10px; border:1px solid #815c76; border-radius:7px; background:#211923ed; color:#ffc5e3; font-size:11px; pointer-events:none }
+.e3-label.demo { color:#eccbdf; border:1px solid #815c76; background:#201923b8; font-weight:600 }
+
+#e3-panel.e3-sidebar-collapsed { grid-template-columns:minmax(0,1fr) }
+#e3-sidebar[hidden],#e3-sidebar-toggle[hidden] { display:none }
+#e3-sidebar-toggle { white-space:nowrap }
+#e3-demo-toggle:disabled { cursor:not-allowed }

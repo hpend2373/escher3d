@@ -4,21 +4,25 @@ import { compartments, moveNode, flowFor } from './scene-data.js'
 
 import { explorationScene, mapGraph, viewIdentity, validateView } from './graph-layout.js'
 import {spatialSpec,getSpatial,setSpatial} from './spatial-layout.js'
+import {demoHighlights} from './demo-highlights.js'
+import {flowParticlePhase} from './flow-animation.js'
 
 const $ = id => document.getElementById(id)
 const header = document.createElement('header')
 header.id = 'e3-header'
 header.innerHTML = `<div class="e3-brand">Escher<span>3D</span></div>
   <nav class="e3-tabs" aria-label="지도 보기"><button id="e3-tab-2d" aria-pressed="true">2D 편집</button><button id="e3-tab-3d" aria-pressed="false" disabled>3D 흐름</button></nav>
+  <button id="e3-sidebar-toggle" aria-controls="e3-sidebar" aria-expanded="true" aria-label="왼쪽 설정창 접기" hidden>설정 접기</button>
   <span class="e3-subtitle">METABOLIC PATHWAY EXPLORER</span>`
 document.body.append(header)
 const panel = document.createElement('section')
 panel.id = 'e3-panel'; panel.hidden = true
 panel.setAttribute('aria-label', '3D 대사경로 탐색')
-panel.innerHTML = `<aside class="e3-sidebar">
+panel.innerHTML = `<aside id="e3-sidebar" class="e3-sidebar" aria-label="3D 보기 설정">
   <p class="e3-eyebrow">SPATIAL VIEW</p><h1>대사경로의<br>흐름을 살펴보세요</h1>
   <div id="e3-map-name" class="e3-muted"></div>
   <div class="e3-row"><button id="e3-import-map">기존 맵 JSON 불러오기</button></div><input id="e3-map-file" type="file" accept=".json,application/json" hidden>
+  <div id="e3-demo-card" class="e3-demo-card"><label><input id="e3-demo-toggle" type="checkbox" checked> 시연용 강조</label><strong id="e3-demo-title"></strong><p>색이 있는 연결선·화살표와 같은 색의 이동 입자·잔상이 관심 구간을 구분합니다. 예제 2개에는 노란색 추가 구간이 있으며 나머지 요소의 불투명도는 기존의 60%입니다. 색은 시연용 구분이며 활성 증감을 뜻하지 않습니다.</p><p id="e3-demo-counts" role="status"></p></div>
   <form id="e3-search-form"><div class="e3-row"><input id="e3-search" type="search" aria-label="반응·대사체 검색" placeholder="반응·대사체 검색" autocomplete="off"><button type="submit" aria-label="검색">⌕</button></div></form>
   <div class="e3-section"><h2>지도 배치</h2>
     <label class="e3-field" for="e3-layout">배치 방식</label><select id="e3-layout"><option value="spatial" selected>공간 분산 · 3D</option><option value="original">원본 지도 · 평면</option><option value="compartment">구획별 3D</option><option value="path">경로 중심 · 단계별 3D</option><option value="radial">방사형 · 구획별 3D</option></select>
@@ -56,12 +60,14 @@ panel.innerHTML = `<aside class="e3-sidebar">
     <div id="e3-legend" class="e3-legend"></div>
   </div>
   <div class="e3-section"><div class="e3-row"><button id="e3-png">3D PNG 저장</button><button id="e3-json">맵 JSON 저장</button></div><div class="e3-row"><button id="e3-save-view">3D 보기 저장</button><button id="e3-load-view">3D 보기 열기</button></div><input id="e3-view-file" type="file" accept=".json,application/json" hidden><a id="e3-last-export" hidden>최근 내보내기 다운로드</a><p class="e3-muted">Map · Data · View 메뉴의 기존 기능을 함께 사용할 수 있습니다.</p></div>
-</aside><div id="e3-stage" class="e3-stage"><div id="e3-view-caption" class="e3-view-caption" aria-live="polite"></div><div id="e3-symbol-legend" class="e3-symbol-legend"><span><i class="e3-node-key"></i>대사체 · 구획별 색</span><span id="e3-reaction-key"><i class="e3-reaction-key"></i>반응</span><span><i class="e3-edge-key"></i>연결선</span><span><b>›</b>흐름 방향</span></div><div id="e3-empty" class="e3-empty" hidden></div><div id="e3-labels" class="e3-labels"></div><aside id="e3-details" class="e3-details" hidden aria-label="선택한 항목 정보"></aside><div id="e3-message" role="status"></div></div>
+</aside><div id="e3-stage" class="e3-stage"><div id="e3-view-caption" class="e3-view-caption" aria-live="polite"></div><div id="e3-symbol-legend" class="e3-symbol-legend"><span><i class="e3-node-key"></i>대사체 · 구획별 색</span><span id="e3-reaction-key"><i class="e3-reaction-key"></i>반응</span><span><i class="e3-edge-key"></i>연결선</span><span><b>›</b>흐름 방향</span></div><div id="e3-demo-badge" class="e3-demo-badge" hidden>시연용 흐름 강조 · 분석 결과 아님</div><div id="e3-empty" class="e3-empty" hidden></div><div id="e3-labels" class="e3-labels"></div><aside id="e3-details" class="e3-details" hidden aria-label="선택한 항목 정보"></aside><div id="e3-message" role="status"></div></div>
 <footer class="e3-footer"><span id="e3-counts">지도 준비 중</span><span id="e3-status">흐름 시각화 · 구획 깊이는 표시용 좌표</span></footer>`
 document.body.append(panel)
 
+let demoEnabled=true, demo=null
+const demoColor='#ffc5e3'
 let optimizer=null,optimizerSignature=''
-let builder, renderer, scene, camera, controls, content, particles, particlePositions
+let builder, renderer, scene, camera, controls, content, particles, particlePositions, particleOpacities, baseParticleOpacities
 let sceneData, currentMap, signature = '', active = false, moving = false, selected = null
 let playing = !matchMedia('(prefers-reduced-motion: reduce)').matches
 let tracks = [], picks = [], labels = [], symbols = [], arrows = [], elapsed = 0, lastTime = 0, labelTime = 0, metricTime = 0, messageTimer
@@ -196,19 +202,29 @@ function rebuild(fit = false) {
   const map = builder.map
   const changedMap = currentMap !== map
   currentMap = map
-  if (changedMap) { cancelOptimization(); layout='spatial'; scope='all'; hideCurrency=false; hideZero=false; context=false; depth=1; selected = null; source = ''; target = ''; choicesSignature = ''; $('e3-details').hidden = true }
+  if (changedMap) { demoEnabled=true; $('e3-demo-toggle').checked=true; cancelOptimization(); layout='spatial'; scope='all'; hideCurrency=false; hideZero=false; context=false; depth=1; selected = null; source = ''; target = ''; choicesSignature = ''; $('e3-details').hidden = true }
   syncChoices()
+  const preset=demoHighlights(map)
+  demo=demoEnabled?preset:null
+  $('e3-demo-toggle').disabled=!preset
+  $('e3-demo-toggle').checked=Boolean(preset&&demoEnabled)
+  $('e3-demo-title').textContent=preset?.title||'예제 4개에서 사용할 수 있습니다.'
+  $('e3-demo-badge').hidden=!demo
   const hideSecondary = setting('hide_secondary_metabolites', false)
   $('e3-secondary').checked = hideSecondary
   sceneData = explorationScene(map, builder.cobra_model, {...viewOptions(), rawReactionData:rawData(), hideSecondary})
   if(optimizer && (layout!=='spatial'||spatialSpecFor(sceneData).signature!==optimizerSignature))cancelOptimization('보기 변경으로 계산을 취소했습니다.')
   updateGraphControls()
+  const demoNodes=sceneData.nodes.filter(n=>demo?.nodes.has(n.id)).length
+  const demoReactions=new Set(sceneData.edges.filter(e=>demo?.reactions.has(e.reactionId)).map(e=>e.reactionId)).size
+  $('e3-demo-counts').textContent=demo?`현재 보기: 강조 노드 ${demoNodes}개 · 반응 ${demoReactions}개`:preset?'강조 꺼짐':'기존 맵 JSON 불러오기에서 예제 파일을 선택하세요.'
   size = Math.max(2, sceneData.span / 850)
   disposeContent(); content = new THREE.Group(); scene.add(content)
+  const backgroundOpacity = demo ? .6 : 1
   const materialCache = new Map()
-  const material = (color, dim = false) => {
-    const key = `${color}:${dim}`
-    if (!materialCache.has(key)) materialCache.set(key, new THREE.MeshBasicMaterial({color, transparent:true, opacity:dim ? .18 : .85}))
+  const material = (color, dim = false, opacity = 1) => {
+    const key = `${color}:${dim}:${opacity}`
+    if (!materialCache.has(key)) materialCache.set(key, new THREE.MeshBasicMaterial({color, transparent:true, opacity:(dim ? .18 : .85)*opacity}))
     return materialCache.get(key)
   }
 
@@ -219,7 +235,9 @@ function rebuild(fit = false) {
   for (const n of sceneData.nodes) {
     const isSelected = (selected?.type === 'node' && selected.id === n.id) || (sceneData.auto && n.key===source)
     const node = symbol('node', isSelected ? '#ffffff' : colorOfNode(n))
-    let diameter = n.primary ? 17 : 12
+    const emphasized=demo?.nodes.has(n.id)
+    node.material.opacity=emphasized||isSelected ? 1 : backgroundOpacity
+    let diameter = (n.primary ? 22 : 16)*(emphasized?1.1:1)
     const nodeSource = map.nodes[n.id]
     if (map.has_data_on_nodes && Number.isFinite(nodeSource.data)) {
       const el = document.querySelector(`#n${CSS.escape(n.id)} .node-circle`)
@@ -227,63 +245,82 @@ function rebuild(fit = false) {
     }
     node.position.set(...n.point); symbols.push({sprite:node,pixels:isSelected ? diameter*1.25 : diameter})
     node.userData = {type:'node', id:n.id}; content.add(node); picks.push(node)
-    if (!hiddenLabels && (n.primary || isSelected || related.has(n.id))) label(names ? nodeSource.name || nodeSource.bigg_id : nodeSource.bigg_id, n.point, 'node', n.id, isSelected ? 0 : related.has(n.id) ? 1 : 3)
+    if (!hiddenLabels && (n.primary || isSelected || emphasized || related.has(n.id))) label((emphasized?'★ ':'')+(names ? nodeSource.name || nodeSource.bigg_id : nodeSource.bigg_id), n.point, emphasized?'node demo':'node', n.id, isSelected ? 0 : emphasized ? 1 : related.has(n.id) ? 2 : 3)
   }
   const styles = new Map()
   for (const edge of sceneData.edges) {
     if (!styles.has(edge.reactionId)) styles.set(edge.reactionId, reactionStyle(edge.reactionId))
     const style = styles.get(edge.reactionId)
     const highlight = selected?.type === 'reaction' && selected.id === edge.reactionId
+    const emphasized=demo?.reactions.has(edge.reactionId)
+    const demoColor=demo?.colors.get(edge.reactionId)
     const curve = new THREE.CubicBezierCurve3(...[edge.p0, edge.p1, edge.p2, edge.p3].map(p => new THREE.Vector3(...p)))
     const length = curve.getLength()
     if (length < .01) continue
     const fluxWidth = basis === 'flux' && edge.value !== null ? .7 + Math.min(3, Math.log1p(Math.abs(edge.value))) : Math.min(style.width, 3)
     const radius = size * .6 * fluxWidth * (highlight ? 1.6 : 1)
     const edgeColor = basis === 'flux' && edge.value === null ? '#687180' : basis === 'flux' && edge.value === 0 ? '#b2bbca' : style.color
-    const tube = new THREE.Mesh(new THREE.TubeGeometry(curve, 14, radius, 5, false), material(highlight ? '#eefdf8' : edgeColor, edge.dim))
+    const tube = new THREE.Mesh(new THREE.TubeGeometry(curve, 14, radius, 5, false), material(highlight ? '#eefdf8' : demoColor || edgeColor, edge.dim, emphasized||highlight ? 1 : backgroundOpacity))
     tube.userData = {type:'reaction', id:edge.reactionId}; content.add(tube); picks.push(tube)
     // Camera-facing chevrons follow the projected curve tangent, not a cone's
     // lighting or viewing angle. The signed flow still determines orientation.
     for (const direction of edge.dim ? [] : edge.directions) {
       const t = direction > 0 ? .68 : .32
-      const arrow = symbol('arrow', highlight ? '#ffffff' : '#b6d5ff')
+      const arrow = symbol('arrow', highlight ? '#ffffff' : demoColor || '#b6d5ff')
+      arrow.material.opacity=emphasized||highlight ? 1 : backgroundOpacity
       arrow.position.copy(curve.getPointAt(t)); arrow.userData=tube.userData
       content.add(arrow); picks.push(arrow)
       arrows.push({sprite:arrow,a:curve.getPointAt(Math.max(0,t-.12)),b:curve.getPointAt(Math.min(1,t+.12)),direction,pixels:15})
-      tracks.push({samples:curve.getSpacedPoints(48), length, direction, count:Math.max(1, Math.min(3, Math.floor(length / (size * 55)))), rate:basis === 'flux' ? .35 + Math.min(3, Math.log1p(Math.abs(edge.value))) : 1, reverse:direction < 0})
+      tracks.push({samples:curve.getSpacedPoints(48), length, direction, emphasized, color:demoColor||'#ff4fa3', opacity:highlight ? 1 : backgroundOpacity, trailCount:emphasized?8:1, trailGap:Math.min(.035,size*3.5/length), count:Math.max(1, Math.min(3, Math.floor(length / (size * 55)))), rate:basis === 'flux' ? .35 + Math.min(3, Math.log1p(Math.abs(edge.value))) : 1, reverse:direction < 0})
     }
   }
   for (const r of sceneData.reactionLabels) {
+    const emphasized=demo?.reactions.has(r.id)
     if(sceneData.auto) {
       const anchor = symbol('reaction', selected?.type==='reaction' && selected.id===r.id ? '#ffffff' : '#ffc15c')
+      anchor.material.opacity=emphasized||(selected?.type==='reaction' && selected.id===r.id) ? 1 : backgroundOpacity
       anchor.position.set(...r.point); symbols.push({sprite:anchor,pixels:14})
       anchor.userData={type:'reaction',id:r.id};content.add(anchor);picks.push(anchor)
     }
-    if (!hiddenLabels) label(names ? map.reactions[r.id].name || r.text : r.text, r.point, 'reaction', r.id, selected?.type === 'reaction' && selected.id === r.id ? 0 : 4)
+    if (!hiddenLabels) label((emphasized?'★ ':'')+(names ? map.reactions[r.id].name || r.text : r.text), r.point, emphasized?'reaction demo':'reaction', r.id, selected?.type === 'reaction' && selected.id === r.id ? 0 : emphasized ? 1 : 4)
   }
   for (const text of Object.values(sceneData.auto || scope !== 'all' ? {} : map.text_labels || {})) {
     if (!hiddenLabels) label(text.text, [text.x - sceneData.center[0], sceneData.center[1] - text.y, 0], 'annotation', '', 2)
   }
+  for (const entry of labels) entry.el.style.opacity=String(entry.priority<=1 ? 1 : backgroundOpacity)
   labels.sort((a,b) => a.priority - b.priority)
-  const count = tracks.reduce((n,t) => n+t.count, 0)
+  const count = tracks.reduce((n,t) => n+t.count*t.trailCount, 0)
   panel.dataset.flowPaths = String(tracks.length)
   panel.dataset.particles = String(count)
   particlePositions = new Float32Array(count * 3)
   const colors = new Float32Array(count * 3)
+  const pointSizes = new Float32Array(count)
+  particleOpacities = new Float32Array(count)
+  baseParticleOpacities = new Float32Array(count)
   let i = 0
-  for (const track of tracks) for (let j=0;j<track.count;j++) {
-    const c = new THREE.Color('#b3daff'); colors.set([c.r,c.g,c.b], i++*3)
+  for (const track of tracks) {
+    const c = new THREE.Color(track.color)
+    for (let j=0;j<track.count;j++) for(let tail=0;tail<track.trailCount;tail++) {
+      const fade=1-tail/track.trailCount
+      colors.set([c.r,c.g,c.b],i*3)
+      pointSizes[i]=track.emphasized?(tail===0?18:12*fade):9
+      baseParticleOpacities[i]=track.emphasized?(tail===0?1:.65*fade):track.opacity
+      particleOpacities[i]=baseParticleOpacities[i]
+      i++
+    }
   }
   const particleGeometry = new THREE.BufferGeometry()
   particleGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3).setUsage(THREE.DynamicDrawUsage))
   particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3))
+  particleGeometry.setAttribute('pointSize', new THREE.BufferAttribute(pointSizes, 1))
+  particleGeometry.setAttribute('particleOpacity', new THREE.BufferAttribute(particleOpacities, 1).setUsage(THREE.DynamicDrawUsage))
   particles = new THREE.Points(particleGeometry, new THREE.ShaderMaterial({
     vertexColors:true, transparent:true, depthWrite:false, blending:THREE.AdditiveBlending,
     // Lift the glow to the camera-facing tube surface; centerline particles
     // otherwise disappear inside opaque reaction tubes.
     uniforms:{pixelRatio:{value:renderer.getPixelRatio()},surfaceOffset:{value:size*3.5}},
-    vertexShader:'varying vec3 vColor; uniform float pixelRatio; uniform float surfaceOffset; void main(){vColor=color; vec4 p=modelViewMatrix*vec4(position,1.0); p.z+=surfaceOffset; gl_Position=projectionMatrix*p; gl_PointSize=7.0*pixelRatio;}',
-    fragmentShader:'varying vec3 vColor; void main(){float d=length(gl_PointCoord-vec2(.5)); if(d>.5)discard; vec3 glow=mix(vColor,vec3(1.0),.8*smoothstep(.25,.05,d)); gl_FragColor=vec4(glow,smoothstep(.5,.18,d));}'
+    vertexShader:'attribute float pointSize; attribute float particleOpacity; varying vec3 vColor; varying float vOpacity; uniform float pixelRatio; uniform float surfaceOffset; void main(){vColor=color; vOpacity=particleOpacity; vec4 p=modelViewMatrix*vec4(position,1.0); p.z+=surfaceOffset; gl_Position=projectionMatrix*p; gl_PointSize=pointSize*pixelRatio;}',
+    fragmentShader:'varying vec3 vColor; varying float vOpacity; void main(){float d=length(gl_PointCoord-vec2(.5)); if(d>.5)discard; vec3 glow=mix(vColor,vec3(1.0),.5*(1.0-smoothstep(.05,.25,d))); gl_FragColor=vec4(glow,(1.0-smoothstep(.18,.5,d))*vOpacity);}'
   }))
   particles.frustumCulled = false; content.add(particles)
   const grid = new THREE.GridHelper(sceneData.span * 1.15, 24, '#294250', '#1a3040')
@@ -334,7 +371,7 @@ function updateLabels() {
   const enabled = $('e3-labels-toggle').checked, occupied = []
   for (const entry of labels) {
     temp.copy(entry.point).project(camera)
-    const x = (temp.x + 1) * width / 2 + 9, y = (1 - temp.y) * height / 2 - 8
+    const x = (temp.x + 1) * width / 2 + (entry.type.startsWith('node') ? 14 : 9), y = (1 - temp.y) * height / 2 - 8
     const w = Math.min(260, entry.el.textContent.length * 6 + 8), h = 17
     let visible = enabled && temp.z > -1 && temp.z < 1 && x>0 && x+w<width && y>0 && y+h<height
     if (visible && entry.priority > 0) visible = occupied.length < 120 && !occupied.some(b => x < b[0]+b[2] && x+w > b[0] && y < b[1]+b[3] && y+h > b[1])
@@ -350,15 +387,19 @@ function animate(time) {
   let index = 0
   for (const track of tracks) {
     const progress = elapsed * size * 22 * track.rate / track.length
-    for (let j=0;j<track.count;j++) {
-      let t = ((progress + j/track.count) % 1 + 1) % 1
-      if (track.direction < 0) t = 1-t
-      const sample = t*48, k = Math.min(47,Math.floor(sample)), fraction = sample-k
+    for (let j=0;j<track.count;j++) for(let tail=0;tail<track.trailCount;tail++) {
+      const t=flowParticlePhase(progress+j/track.count,track.direction,tail,track.trailGap)
+      particleOpacities[index]=t===null?0:baseParticleOpacities[index]
+      const sample=(t??0)*48,k=Math.min(47,Math.floor(sample)),fraction=sample-k
       temp.lerpVectors(track.samples[k],track.samples[k+1],fraction)
-      particlePositions.set([temp.x,temp.y,temp.z],index++*3)
+      particlePositions[index*3]=temp.x;particlePositions[index*3+1]=temp.y;particlePositions[index*3+2]=temp.z
+      index++
     }
   }
-  if (particles) particles.geometry.attributes.position.needsUpdate = true
+  if (particles) {
+    particles.geometry.attributes.position.needsUpdate=true
+    particles.geometry.attributes.particleOpacity.needsUpdate=true
+  }
   controls.update(dt)
   updateSymbols()
   if (time-labelTime > 90) { updateLabels(); labelTime = time }
@@ -375,6 +416,7 @@ function setView(three) {
     builder.map.set_status('3D에는 WebGL2 지원 브라우저가 필요합니다. 2D 편집은 계속 사용할 수 있습니다.')
     return
   }
+  $('e3-sidebar-toggle').hidden=!three
   active = three; panel.hidden = !three; document.body.classList.toggle('e3-active',three)
   document.querySelector('#root .escher-zoom-container')?.setAttribute('aria-hidden',String(three))
   buttonPressed('e3-tab-2d',!three); buttonPressed('e3-tab-3d',three)
@@ -587,6 +629,15 @@ function startOptimization() {
 }
 $('e3-optimize').onclick=startOptimization
 $('e3-optimize-cancel').onclick=()=>cancelOptimization('계산을 취소했습니다. 현재 배치를 유지합니다.')
+$('e3-sidebar-toggle').onclick=()=>{
+  const collapsed=panel.classList.toggle('e3-sidebar-collapsed')
+  $('e3-sidebar').hidden=collapsed
+  $('e3-sidebar-toggle').setAttribute('aria-expanded',String(!collapsed))
+  $('e3-sidebar-toggle').setAttribute('aria-label',collapsed?'왼쪽 설정창 펼치기':'왼쪽 설정창 접기')
+  $('e3-sidebar-toggle').textContent=collapsed?'설정 펼치기':'설정 접기'
+  requestAnimationFrame(resize)
+}
+$('e3-demo-toggle').onchange=event=>{demoEnabled=event.target.checked;rebuild()}
 $('e3-import-map').onclick=()=>$('e3-map-file').click()
 $('e3-map-file').onchange=async event=>{
   const file=event.target.files[0];if(!file)return
@@ -674,8 +725,9 @@ $('e3-png').onclick=()=>{
   updateSymbols();renderer.render(scene,camera);updateLabels()
   const out=document.createElement('canvas'), source=renderer.domElement, ratio=renderer.getPixelRatio();out.width=source.width;out.height=source.height
   const ctx=out.getContext('2d');ctx.fillStyle='#0c1420';ctx.fillRect(0,0,out.width,out.height);ctx.drawImage(source,0,0);ctx.scale(ratio,ratio)
-  for(const entry of labels)if(!entry.el.hidden){temp.copy(entry.point).project(camera);ctx.font=entry.type==='reaction'?'9px sans-serif':'10px sans-serif';ctx.fillStyle=entry.type==='reaction'?'#a6bbc8':'#dbe9f0';ctx.fillText(entry.el.textContent,(temp.x+1)*out.width/ratio/2+13,(1-temp.y)*out.height/ratio/2+5)}
+  for(const entry of labels)if(!entry.el.hidden){temp.copy(entry.point).project(camera);ctx.font=entry.el.classList.contains('demo')?'bold 10px sans-serif':entry.type==='reaction'?'9px sans-serif':'10px sans-serif';ctx.fillStyle=entry.el.classList.contains('demo')?demoColor:entry.type==='reaction'?'#a6bbc8':'#dbe9f0';ctx.fillText(entry.el.textContent,(temp.x+1)*out.width/ratio/2+13,(1-temp.y)*out.height/ratio/2+5)}
   ctx.fillStyle='#bcd0df';ctx.font='11px sans-serif';ctx.fillText(basis==='flux'?'Escher 3D · input flux visualization':'Escher 3D · reaction direction visualization',16,out.height/ratio-16)
+  if(demo){ctx.fillStyle=demoColor;ctx.font='bold 12px sans-serif';ctx.fillText('DEMO HIGHLIGHTS · illustrative only, not analysis results',16,24)}
   out.toBlob(blob=>{if(blob)download(blob,`${builder.map.map_name||'escher'}-3d.png`)},'image/png')
 }
 reducedMotion.addEventListener('change',event=>{if(event.matches){playing=false;if(controls)controls.autoRotate=false;buttonPressed('e3-spin',false);playState()}})
