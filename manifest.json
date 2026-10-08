@@ -1,0 +1,229 @@
+{
+  "version": "0.1.0",
+  "files": {
+    ".gitignore": {
+      "bytes": 66,
+      "sha256": "c0fca3797caecd45f371a440f8a8aa8536ebc8f6319eb6fa04ad0835b09b46cc"
+    },
+    "DESIGN.md": {
+      "bytes": 29119,
+      "sha256": "a5d47dddacf5a04577cec0be6fe0fc53b7402254c7686874af3e59bcc7588cb4"
+    },
+    "Escher-Carbon-Path.command": {
+      "bytes": 806,
+      "sha256": "e162697dbd72820a2b7573945f763fd3264f5519313209d45186f8261cb46825"
+    },
+    "Escher-Remote.cmd": {
+      "bytes": 542,
+      "sha256": "b1472486073ef071afc28d97ac24ceaf549b61d93626c6e1a8f4a8720a41d669"
+    },
+    "Escher-Remote.command": {
+      "bytes": 157,
+      "sha256": "0f44853d938f5fc13319eecf2f0489812152e38eace9c54a7e8634391c5787a0"
+    },
+    "Escher-Remote.sh": {
+      "bytes": 740,
+      "sha256": "350fa0905c2921216ae8f386de755c70fd52a83b944bdf66cb39812294e23fcd"
+    },
+    "Escher-iMM1865.cmd": {
+      "bytes": 770,
+      "sha256": "d26a51877e1584a292e8bba3dc369533a743adf49d039ca782f9384c50c696e4"
+    },
+    "Escher-iMM1865.sh": {
+      "bytes": 680,
+      "sha256": "783a24731c28087c01a49f6a02e43d586f3c2fa87611732025c48aeface0e34f"
+    },
+    "README.md": {
+      "bytes": 5371,
+      "sha256": "c91837def49a5cc9163cdbfd547b991c62b46e444cc69a078df0a0b56f91c500"
+    },
+    "README.txt": {
+      "bytes": 167,
+      "sha256": "4d8a1046024eee22593575610fe6f6778dcea07ea4d8baa1828098cc43489d83"
+    },
+    "THIRD_PARTY_NOTICES.md": {
+      "bytes": 2304,
+      "sha256": "feb864bd154766d314a0a33fb0aaa789d719b1d15b30744d940baecd1bb92e4d"
+    },
+    "app/assets/fontello-CKJX_oW4.eot": {
+      "bytes": 9628,
+      "sha256": "c1803bbf7ac4e1c306e474343b5810ea5dcebc69797f66da780d671aca56931c"
+    },
+    "app/assets/fontello-COVik6tK.woff2": {
+      "bytes": 4756,
+      "sha256": "49bebce9a22c52327f58f422a113805a0269a1b6b9d13f1138877be0d5f00334"
+    },
+    "app/assets/fontello-DYJDak0u.woff": {
+      "bytes": 5588,
+      "sha256": "3b4f4794204efbdc4ba380d9bdec686add008cf739c398f0c13631318552c099"
+    },
+    "app/assets/fontello-Dn9jXMOh.svg": {
+      "bytes": 7850,
+      "sha256": "3f6248f4b961689636994796957a9afb7add1dd8e230d8eb2df7e9b0cdc318ab"
+    },
+    "app/assets/fontello-DngNEfvZ.ttf": {
+      "bytes": 9460,
+      "sha256": "4d0f122e258a2a83c262fc9cdef9c22c592b3f49fda5f01183e5d4a5fe7238b1"
+    },
+    "app/assets/index-D0I8-fPU.css": {
+      "bytes": 43400,
+      "sha256": "0603a77da0def87a0e38deb44c3e64955e71e9166a26345258cbab3dc56291b1"
+    },
+    "app/assets/index-DLd4wYnI.js": {
+      "bytes": 454686,
+      "sha256": "2df1cea55ec7f97d07fd9c44e942b40903448a46aafeff604ba5f86fcf4a8119"
+    },
+    "app/auxiliary-visuals.js": {
+      "bytes": 6889,
+      "sha256": "ec37229ea4f7ab93eb87f4dd5e5c30f1b2a74853acca77efa90a41042b61fe4b"
+    },
+    "app/escher-3d.css": {
+      "bytes": 9690,
+      "sha256": "79b799799d2d278c0c180850a590d1dca4203ea41b365a46e26a58ce6a598832"
+    },
+    "app/escher-3d.js": {
+      "bytes": 51070,
+      "sha256": "6f8c6a2c545457fd4c6dc8c11d99fafabf631585c0dd8c947dfe60b64ccbcba4"
+    },
+    "app/graph-layout.js": {
+      "bytes": 13519,
+      "sha256": "0407755f6765441c1bb47608dedd91aa8fc6f1901f723b22f00f5e6c6973b8a5"
+    },
+    "app/index.html": {
+      "bytes": 732,
+      "sha256": "4f801f89733a66a9fc23754e191dcc3ac72df9deae5b5ff042716893523d52fc"
+    },
+    "app/map-router.js": {
+      "bytes": 1020,
+      "sha256": "82b8c92cad7343af844aac40f4d92b663e6ace923d992cea552f256956c48ee0"
+    },
+    "app/maps/ELOVL5_FA_synthesis_focus.json": {
+      "bytes": 374903,
+      "sha256": "50c595567666d512d8c80299ecf73d0b2e15302637345c9cebc4f3e8805c8753"
+    },
+    "app/maps/iMM1865.Pyrimidine and beta-Alanine metabolism (2).json": {
+      "bytes": 402103,
+      "sha256": "37cd8d6e72b894b9b6c614d0dcac5709a2343c94eeef6ebeb27901c8db994f17"
+    },
+    "app/maps/map00240_backbone.json": {
+      "bytes": 621816,
+      "sha256": "96f7c7ae98f0dd99960424261977f9acf57e9ed0e0180585e85dc5a766b0b383"
+    },
+    "app/maps/map00410_backbone.json": {
+      "bytes": 91426,
+      "sha256": "95bdba4d2c411dbe486f90a28dc88dc1b3ae3c1f352544b865fdf0d650b2bed9"
+    },
+    "app/maps/merged_backbone.json": {
+      "bytes": 688169,
+      "sha256": "b66df6d041223cfbcdf8afdaabe24aef154c8b0a96bd31cb1c77371cbf4c4f38"
+    },
+    "app/models/Recon3D.json": {
+      "bytes": 7839114,
+      "sha256": "aba925f17547a42f9fdb4c1f685d89364cbf4979bbe7862e9f793af7169b26d5"
+    },
+    "app/models/iMM1865.json": {
+      "bytes": 5765268,
+      "sha256": "4c2c74968e65f4145d9e4e658b0c71031a29d611f44d6f496059f9da2202a50a"
+    },
+    "app/scene-data.js": {
+      "bytes": 7052,
+      "sha256": "072cff1f38ca3848f9346f1b90322d772ffcd2ff4b25ebef5bc21130284f1167"
+    },
+    "app/spatial-layout.js": {
+      "bytes": 5029,
+      "sha256": "df35be42e2868f89c68906e426b49d8a111d57afc37df0d084c401847bfe23fc"
+    },
+    "app/spatial-worker.js": {
+      "bytes": 320,
+      "sha256": "5a65bec5bc5f26287717a55c9c520d3510bab325e80484b70ceb04f7633da79a"
+    },
+    "app/vendor/three/LICENSE": {
+      "bytes": 1081,
+      "sha256": "bfe119ea4fd413f5f7ca3fcd63adb0c4a073ed39daa2fe7d3e6b769e21272601"
+    },
+    "app/vendor/three/OrbitControls.js": {
+      "bytes": 38719,
+      "sha256": "6c860c6b342200f8aef65493319c12bfb2d652107355b1d25eb2154371128391"
+    },
+    "app/vendor/three/PROVENANCE.txt": {
+      "bytes": 414,
+      "sha256": "1ed4b6683bd28c2217e5bd28b49727eb2697a90d262aeab6a40d85b87ba2c3a5"
+    },
+    "app/vendor/three/three.core.min.js": {
+      "bytes": 381124,
+      "sha256": "61ba0df005b05991361d040d8ff670e1aadfd0ce7aeebd1fdb0725957a8957de"
+    },
+    "app/vendor/three/three.module.min.js": {
+      "bytes": 338908,
+      "sha256": "e2b5ee6bccd38fd6d8a2428546b83c5f2426d84b152ef82be8055556e3b40eb6"
+    },
+    "docs/escher3d.png": {
+      "bytes": 218446,
+      "sha256": "90cc010a1fe4e98f5a95e9c366abb54fa798491e07b318249b7cf554f00b1da4"
+    },
+    "docs/iMM1865-provenance.md": {
+      "bytes": 1322,
+      "sha256": "3fd0c5254c2b96a2a62989823b79514b0947e82b08a457393b8965d15a1e23e6"
+    },
+    "examples/README.md": {
+      "bytes": 2108,
+      "sha256": "02f0951c6f15ea58f1dd671cb252fa07d13499a375b764b46cb908dd0b50365a"
+    },
+    "examples/RECON1.Glycolysis TCA PPP.json": {
+      "bytes": 81991,
+      "sha256": "b48b0f91ba9f8c78da3f30ccd3ebbb5abd9a1710057fee6c517413bbade008fc"
+    },
+    "examples/RECON1.Tryptophan metabolism.json": {
+      "bytes": 101424,
+      "sha256": "cc56d5bb2b2524bd1c931ace51eedd43c1bc3da4d597f99480b16ee890a12325"
+    },
+    "examples/iJO1366.Fatty acid beta-oxidation.json": {
+      "bytes": 120463,
+      "sha256": "d954b23fb25de447ec275ce9ca1cddad89f319612c0a7dc5c2b1e0e0f6c25de0"
+    },
+    "examples/iJO1366.Fatty acid biosynthesis (saturated).json": {
+      "bytes": 144745,
+      "sha256": "98329652b7041dc36b3e3b28bb47da22a22f2ae444dac206c22bb7cb0e85a7b9"
+    },
+    "examples/sources.json": {
+      "bytes": 2131,
+      "sha256": "54921052ab98fc04181cbd4326ecb5e8520c8f76528642c99f578b12a7de0c99"
+    },
+    "examples/validation.json": {
+      "bytes": 1324,
+      "sha256": "014a5d97874f804073989cdfb553d9fd2872c44cf9cde0b33bb3048e59bc32c0"
+    },
+    "licenses/Escher.txt": {
+      "bytes": 1242,
+      "sha256": "a5add39b07a8744ab8c1cea9112857cd9573dc870ccf8ee18566fab5d14ab8bc"
+    },
+    "package.json": {
+      "bytes": 371,
+      "sha256": "da91b0348f963efa0c2353d277d7f0302996d1f230e6ee7847da2f2ef8726e81"
+    },
+    "server.mjs": {
+      "bytes": 6966,
+      "sha256": "ea38044fa7679b001a47214239de89ed389cf48742f5290dfafed0d0b4708cb1"
+    },
+    "tests/fixtures/comparison.json": {
+      "bytes": 49,
+      "sha256": "b43f818bf9ba09de7d451bcccff8b2eae47d1114ffeea9ba3111b4a2969da996"
+    },
+    "tests/fixtures/signed-flux.json": {
+      "bytes": 44,
+      "sha256": "ca01285ddc56f2fbb070be1fe9f0d9e6046c77f29c335ee19f7685ef1c1d1d91"
+    },
+    "tests/graph-layout.test.mjs": {
+      "bytes": 7619,
+      "sha256": "61af35fb26edec6c04dd8e69b5317469e13cc36bbb2d145eb92c61c250c7755e"
+    },
+    "tests/scene-data.test.mjs": {
+      "bytes": 3977,
+      "sha256": "4c8a33457bd6333abf5e361fe87dbb9b35191db96689b8840df8806ece861a98"
+    },
+    "tests/spatial-layout.test.mjs": {
+      "bytes": 2015,
+      "sha256": "2d0a881fad6608d701652abf4e11efb243f1f36eeb14086dfd34a2ce9199cd49"
+    }
+  }
+}

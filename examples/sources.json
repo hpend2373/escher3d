@@ -1,0 +1,52 @@
+{
+  "retrieved_at": "2026-10-08T03:48:18.788222+00:00",
+  "catalog": "https://escher.github.io/1-0-0/6/index.json",
+  "format": "Escher map JSON",
+  "original_bytes_preserved": true,
+  "maps": [
+    {
+      "organism": "Homo sapiens",
+      "map_name": "RECON1.Glycolysis TCA PPP",
+      "url": "https://escher.github.io/1-0-0/6/maps/Homo%20sapiens/RECON1.Glycolysis%20TCA%20PPP.json",
+      "reactions": 43,
+      "metabolites": 66,
+      "label_ko": "사람 해당과정·TCA·PPP",
+      "filename": "RECON1.Glycolysis TCA PPP.json",
+      "bytes": 81991,
+      "sha256": "b48b0f91ba9f8c78da3f30ccd3ebbb5abd9a1710057fee6c517413bbade008fc"
+    },
+    {
+      "organism": "Homo sapiens",
+      "map_name": "RECON1.Tryptophan metabolism",
+      "url": "https://escher.github.io/1-0-0/6/maps/Homo%20sapiens/RECON1.Tryptophan%20metabolism.json",
+      "reactions": 45,
+      "metabolites": 82,
+      "label_ko": "사람 트립토판 대사",
+      "filename": "RECON1.Tryptophan metabolism.json",
+      "bytes": 101424,
+      "sha256": "cc56d5bb2b2524bd1c931ace51eedd43c1bc3da4d597f99480b16ee890a12325"
+    },
+    {
+      "organism": "Escherichia coli",
+      "map_name": "iJO1366.Fatty acid beta-oxidation",
+      "url": "https://escher.github.io/1-0-0/6/maps/Escherichia%20coli/iJO1366.Fatty%20acid%20beta-oxidation.json",
+      "reactions": 46,
+      "metabolites": 59,
+      "label_ko": "대장균 지방산 베타 산화",
+      "filename": "iJO1366.Fatty acid beta-oxidation.json",
+      "bytes": 120463,
+      "sha256": "d954b23fb25de447ec275ce9ca1cddad89f319612c0a7dc5c2b1e0e0f6c25de0"
+    },
+    {
+      "organism": "Escherichia coli",
+      "map_name": "iJO1366.Fatty acid biosynthesis (saturated)",
+      "url": "https://escher.github.io/1-0-0/6/maps/Escherichia%20coli/iJO1366.Fatty%20acid%20biosynthesis%20%28saturated%29.json",
+      "reactions": 54,
+      "metabolites": 57,
+      "label_ko": "대장균 포화 지방산 합성",
+      "filename": "iJO1366.Fatty acid biosynthesis (saturated).json",
+      "bytes": 144745,
+      "sha256": "98329652b7041dc36b3e3b28bb47da22a22f2ae444dac206c22bb7cb0e85a7b9"
+    }
+  ]
+}

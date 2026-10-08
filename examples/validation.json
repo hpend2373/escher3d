@@ -1,0 +1,50 @@
+[
+  {
+    "filename": "RECON1.Glycolysis TCA PPP.json",
+    "reactions": 43,
+    "unique_metabolites": 66,
+    "drawing_nodes": 216,
+    "segments": 224,
+    "spatial_nodes": 109,
+    "spatial_edges": 165,
+    "missing_reaction_metabolite_references": 0,
+    "finite_3d_coordinates": true,
+    "source_unmodified": true
+  },
+  {
+    "filename": "RECON1.Tryptophan metabolism.json",
+    "reactions": 45,
+    "unique_metabolites": 82,
+    "drawing_nodes": 296,
+    "segments": 292,
+    "spatial_nodes": 127,
+    "spatial_edges": 212,
+    "missing_reaction_metabolite_references": 0,
+    "finite_3d_coordinates": true,
+    "source_unmodified": true
+  },
+  {
+    "filename": "iJO1366.Fatty acid beta-oxidation.json",
+    "reactions": 46,
+    "unique_metabolites": 59,
+    "drawing_nodes": 303,
+    "segments": 309,
+    "spatial_nodes": 105,
+    "spatial_edges": 217,
+    "missing_reaction_metabolite_references": 0,
+    "finite_3d_coordinates": true,
+    "source_unmodified": true
+  },
+  {
+    "filename": "iJO1366.Fatty acid biosynthesis (saturated).json",
+    "reactions": 54,
+    "unique_metabolites": 57,
+    "drawing_nodes": 356,
+    "segments": 377,
+    "spatial_nodes": 111,
+    "spatial_edges": 269,
+    "missing_reaction_metabolite_references": 0,
+    "finite_3d_coordinates": true,
+    "source_unmodified": true
+  }
+]

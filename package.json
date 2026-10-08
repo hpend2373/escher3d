@@ -1,0 +1,14 @@
+{
+  "name": "escher3d",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs --app-root app --port 4173 --open-path /?map=merged",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "version": "0.1.0",
+  "description": "Local Escher pathway editor with 3D layouts and directional flow visualization",
+  "engines": {
+    "node": ">=18"
+  }
+}
