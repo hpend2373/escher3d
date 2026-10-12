@@ -86,8 +86,8 @@
       "sha256": "cd744c350583f91a17486e38083a279be7b78a18fca61eb52344cf6f90293af2"
     },
     "app/escher-3d.css": {
-      "bytes": 10636,
-      "sha256": "045a4aee67a8c757babfbb7b2814963fc8fea783c1e1554a491e87dac407392d"
+      "bytes": 10875,
+      "sha256": "33b03b24f4656f65350d9b5e5a4310e7f1877f493614721da61e8c674ccce092"
     },
     "app/escher-3d.js": {
       "bytes": 55831,
@@ -102,8 +102,8 @@
       "sha256": "0407755f6765441c1bb47608dedd91aa8fc6f1901f723b22f00f5e6c6973b8a5"
     },
     "app/index.html": {
-      "bytes": 780,
-      "sha256": "78edf97d5761d20b593efce94565d9220739f9b3b7e76cb0b5de05bdfe77e684"
+      "bytes": 786,
+      "sha256": "5a5e87b4ced16c5ae566794744b9be6c6c2ddf96daa158b6140fe86715aa2f8d"
     },
     "app/map-router.js": {
       "bytes": 1020,

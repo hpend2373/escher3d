@@ -112,7 +112,11 @@ body { margin:0 }
 .e3-demo-badge { position:absolute; top:60px; left:20px; padding:7px 10px; border:1px solid #815c76; border-radius:7px; background:#211923ed; color:#ffc5e3; font-size:11px; pointer-events:none }
 .e3-label.demo { color:#eccbdf; border:1px solid #815c76; background:#201923b8; font-weight:600 }
 
-#e3-panel.e3-sidebar-collapsed { grid-template-columns:minmax(0,1fr) }
+#e3-panel.e3-sidebar-collapsed { grid-template-columns:minmax(0,1fr); grid-template-rows:minmax(0,1fr) }
+#e3-panel.e3-sidebar-collapsed .e3-demo-badge,
+#e3-panel.e3-sidebar-collapsed .e3-view-caption,
+#e3-panel.e3-sidebar-collapsed .e3-symbol-legend,
+#e3-panel.e3-sidebar-collapsed .e3-footer { display:none }
 #e3-sidebar[hidden],#e3-sidebar-toggle[hidden] { display:none }
 #e3-sidebar-toggle { white-space:nowrap }
 #e3-demo-toggle:disabled { cursor:not-allowed }
